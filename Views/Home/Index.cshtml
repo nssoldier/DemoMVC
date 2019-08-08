@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<div class="text-center">
+    @if(ViewBag.message!=null)
+    {
+        <h1 class="display-4">Welcome @ViewBag.message</h1>
+        <a href="/Home/Logout">Logout</a>
+    }
+    else{
+        <div>
+            <form method="POST" action="/Home/Login">
+                <label>Username: </label>
+                <input name="name" type="text"/>
+                <button>Login</button>
+            </form>
+        </div>
+    }
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+
