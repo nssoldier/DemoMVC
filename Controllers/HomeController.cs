@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using demoMVC.Models;
 using Microsoft.AspNetCore.Http;
+using demoMVC.Model;
 
 namespace demoMVC.Controllers
 {
   public class HomeController : Controller
   {
 
+    private MyDbContext dbContext;
+    public HomeController(MyDbContext context)
+    {
+      this.dbContext = context;
+    }
     public IActionResult Index([FromQuery]string name)
     {
       var username = HttpContext.Session.GetString("username");
@@ -20,8 +26,11 @@ namespace demoMVC.Controllers
     }
 
     [HttpPost]
-    public IActionResult Login(string name)
+    public IActionResult Login(string name, string password)
     {
+      var user = new Users(1, name, password);
+      dbContext.Users.Add(user);
+      dbContext.SaveChanges();
       HttpContext.Session.SetString("username", name);
       return Redirect("/?name=" + name);
     }

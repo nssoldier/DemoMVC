@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using demoMVC.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +36,7 @@ namespace demoMVC
         options.Cookie.IsEssential = true;
       });
 
+      services.AddScoped<MyDbContext, MyDbContext>();
       services.Configure<CookiePolicyOptions>(options =>
       {
         // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -60,7 +62,7 @@ namespace demoMVC
         app.UseHsts();
       }
 
-    //   app.UseHttpsRedirection();
+      //   app.UseHttpsRedirection();
       app.UseStaticFiles();
       app.UseCookiePolicy();
       app.UseSession();
