@@ -18,21 +18,25 @@ namespace demoMVC.Controllers
     {
       this.dbContext = context;
     }
-    public IActionResult Index([FromQuery]string name)
+    public IActionResult Index([FromQuery]bool logged, int id)
     {
-      var username = HttpContext.Session.GetString("username");
-      ViewBag.message = username;
+      if (logged == true)
+      {
+        var user = dbContext.Users.FirstOrDefault(acc => acc.Id == id);
+        ViewBag.message = user.Username;
+      }
       return View();
     }
 
     [HttpPost]
     public IActionResult Login(string name, string password)
     {
-      var user = new Users(1, name, password);
+      var user = new Users(name, password);
       dbContext.Users.Add(user);
       dbContext.SaveChanges();
-      HttpContext.Session.SetString("username", name);
-      return Redirect("/?name=" + name);
+      user = dbContext.Users.FirstOrDefault(acc => acc.Username == name);
+      HttpContext.Session.SetString("logged", "true");
+      return Redirect("/?logged=" + true + "&id=" + user.Id);
     }
 
     [HttpGet]

@@ -31,9 +31,8 @@ namespace demoMVC.Model
 
   public class Users
   {
-    public Users(int id, string username, string userPwd)
+    public Users(string username, string userPwd)
     {
-      Id = id;
       Username = username;
       UserPwd = userPwd;
     }
